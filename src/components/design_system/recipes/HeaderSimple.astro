@@ -1,0 +1,38 @@
+---
+import HeaderSection from '../sections/HeaderSection.astro'
+
+interface NavItem {
+  label: string
+  href: string
+}
+
+const defaultNavItems: NavItem[] = [
+  { label: 'Platform', href: '#' },
+  { label: 'Solutions', href: '#' },
+  { label: 'Pricing', href: '#' },
+  { label: 'Customers', href: '#' },
+  { label: 'Resources', href: '#' },
+]
+
+interface Props {
+  brandLabel?: string
+  brandLogoSrc?: string
+  navItems?: NavItem[]
+}
+
+const {
+  brandLabel = 'Scienith',
+  brandLogoSrc = '/assets/brand/scienith-mark.png',
+  navItems = defaultNavItems,
+} = Astro.props
+---
+
+<HeaderSection
+  brandLabel={brandLabel}
+  brandLogoSrc={brandLogoSrc}
+  navItems={navItems}
+  actions={[
+    { label: '预约沟通', href: '#', variant: 'primary' },
+    { label: '查看能力', href: '#', variant: 'secondary' },
+  ]}
+/>

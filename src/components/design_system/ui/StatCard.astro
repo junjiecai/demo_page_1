@@ -1,0 +1,32 @@
+---
+interface Props {
+  value: string
+  label: string
+  detail?: string
+  tone?: 'default' | 'minimal' | 'contrast'
+  highlight?: boolean
+  class?: string
+}
+
+const {
+  value,
+  label,
+  detail,
+  tone = 'default',
+  highlight = false,
+  class: className = '',
+} = Astro.props
+
+const classes = [
+  'stat-card',
+  tone !== 'default' && `stat-card--${tone}`,
+  highlight && 'stat-card--highlight',
+  className,
+]
+---
+
+<div class:list={classes}>
+  <dd class="stat-card__value">{value}</dd>
+  <dt class="stat-card__label">{label}</dt>
+  {detail && <p class="stat-card__detail">{detail}</p>}
+</div>

@@ -1,0 +1,14 @@
+---
+interface Props {
+  src?: string
+  alt?: string
+  rounded?: 'default' | 'flush' | 'hero'
+  class?: string
+}
+
+const { src, alt = '', rounded = 'default', class: className = '' } = Astro.props
+---
+
+<div class:list={['media-frame', rounded !== 'default' && `media-frame--${rounded}`, className]}>
+  {src ? <img src={src} alt={alt} loading="lazy" /> : <slot />}
+</div>

@@ -1,0 +1,43 @@
+---
+interface Props {
+  title: string
+  description?: string
+  meta?: string
+  icon?: string
+  tone?: 'default' | 'bordered' | 'horizontal'
+  align?: 'start' | 'center'
+  class?: string
+}
+
+const {
+  title,
+  description,
+  meta,
+  icon,
+  tone = 'default',
+  align = 'start',
+  class: className = '',
+} = Astro.props
+
+const hasIconSlot = Astro.slots.has('icon')
+const classes = [
+  'feature-card',
+  tone !== 'default' && `feature-card--${tone}`,
+  align === 'center' && 'feature-card--centered',
+  className,
+]
+---
+
+<article class:list={classes}>
+  {(icon || hasIconSlot) && (
+    <div class="feature-card__icon" aria-hidden="true">
+      {hasIconSlot ? <slot name="icon" /> : <Fragment set:html={icon} />}
+    </div>
+  )}
+
+  <div class="feature-card__body">
+    <h3 class="feature-card__title">{title}</h3>
+    {description && <p class="feature-card__description">{description}</p>}
+    {meta && <p class="feature-card__meta">{meta}</p>}
+  </div>
+</article>

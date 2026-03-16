@@ -1,0 +1,134 @@
+---
+import FloatingConsultCta from '../components/app_components/FloatingConsultCta.astro'
+import FooterSection from '../components/design_system/sections/FooterSection.astro'
+import HeaderSection from '../components/design_system/sections/HeaderSection.astro'
+import '../styles/app-global.css'
+
+interface NavItem {
+  label: string
+  href: string
+}
+
+interface ActionItem {
+  label: string
+  href: string
+  variant?: 'primary' | 'secondary' | 'ghost' | 'inverse'
+}
+
+interface FooterLink {
+  label: string
+  href: string
+  badge?: string
+  status?: 'live'
+}
+
+interface FooterGroup {
+  title: string
+  links: readonly FooterLink[]
+}
+
+interface FloatingAsset {
+  url: string
+  alt: string
+}
+
+interface Props {
+  title: string
+  description: string
+  canonicalPath?: string
+  ogImage?: string
+  noindex?: boolean
+  header: {
+    brandLabel: string
+    brandHref: string
+    brandLogoSrc: string
+    navItems: NavItem[]
+    actions: ActionItem[]
+  }
+  footer: {
+    brandLabel: string
+    brandHref: string
+    brandLogoSrc: string
+    brandSummary: string
+    groups: readonly FooterGroup[]
+    legalLinks: readonly FooterLink[]
+    layout: 'columns' | 'newsletter' | 'cta'
+    tone: 'default' | 'muted' | 'contrast'
+    copyright: string
+  }
+  floatingCta?: {
+    label: string
+    supportingText?: string
+    summary: string
+    href: string
+    previewAsset?: FloatingAsset
+  }
+}
+
+const {
+  title,
+  description,
+  canonicalPath = '/',
+  ogImage = '/assets/brand/og-base.png',
+  noindex = false,
+  header,
+  footer,
+  floatingCta,
+} = Astro.props
+
+const site = new URL(Astro.site ?? 'https://scienith.com')
+const canonicalUrl = new URL(canonicalPath, site).toString()
+const ogImageUrl = new URL(ogImage, site).toString()
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" href="/assets/brand/favicon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+  </head>
+  <body>
+    <div class="app-shell">
+      <HeaderSection
+        brandLabel={header.brandLabel}
+        brandHref={header.brandHref}
+        brandLogoSrc={header.brandLogoSrc}
+        navItems={header.navItems}
+        actions={header.actions}
+      />
+
+      <main class="app-main">
+        <slot />
+      </main>
+
+      <div id="site-footer">
+        <FooterSection
+          brandLabel={footer.brandLabel}
+          brandHref={footer.brandHref}
+          brandLogoSrc={footer.brandLogoSrc}
+          brandSummary={footer.brandSummary}
+          groups={footer.groups}
+          legalLinks={footer.legalLinks}
+          layout={footer.layout}
+          tone={footer.tone}
+          copyright={footer.copyright}
+        />
+      </div>
+    </div>
+
+    {floatingCta && <FloatingConsultCta {...floatingCta} />}
+  </body>
+</html>

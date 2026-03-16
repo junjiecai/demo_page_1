@@ -1,0 +1,95 @@
+---
+import Container from '../ui/Container.astro'
+import FeatureCard from '../ui/FeatureCard.astro'
+import Grid from '../ui/Grid.astro'
+import HeadingBlock from '../ui/HeadingBlock.astro'
+import Section from '../ui/Section.astro'
+
+interface FeatureItem {
+  title: string
+  description?: string
+  meta?: string
+  icon?: string
+}
+
+interface Props {
+  eyebrow?: string
+  title?: string
+  summary?: string
+  items: FeatureItem[]
+  layout?: 'cards' | 'split-list' | 'compact' | 'bordered'
+  tone?: 'default' | 'muted' | 'contrast'
+  class?: string
+}
+
+const {
+  eyebrow,
+  title,
+  summary,
+  items,
+  layout = 'cards',
+  tone = 'default',
+  class: className = '',
+} = Astro.props
+
+const centeredHeadingProps = {
+  title: title ?? '',
+  align: 'center' as const,
+  ...(eyebrow ? { eyebrow } : {}),
+  ...(summary ? { summary } : {}),
+}
+
+const defaultHeadingProps = {
+  title: title ?? '',
+  ...(eyebrow ? { eyebrow } : {}),
+  ...(summary ? { summary } : {}),
+}
+---
+
+<Section tone={tone} class={className}>
+  <Container>
+    <div class="feature-grid-section">
+      {layout === 'cards' && title && (
+        <HeadingBlock {...centeredHeadingProps} />
+      )}
+
+      {layout === 'cards' && (
+        <Grid columns={3} tabletColumns={2}>
+          {items.map((item) => (
+            <FeatureCard {...item} tone="bordered" />
+          ))}
+        </Grid>
+      )}
+
+      {layout === 'split-list' && (
+        <div class="feature-grid-section__split">
+          <div>
+            {title && <HeadingBlock {...defaultHeadingProps} />}
+          </div>
+
+          <div class="feature-grid-section__list">
+            {items.map((item) => (
+              <FeatureCard {...item} tone="horizontal" />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {layout === 'compact' && (
+        <Grid columns={4} tabletColumns={2}>
+          {items.map((item) => (
+            <FeatureCard {...item} align="center" />
+          ))}
+        </Grid>
+      )}
+
+      {layout === 'bordered' && (
+        <Grid columns={2} tabletColumns={1}>
+          {items.map((item) => (
+            <FeatureCard {...item} tone="horizontal" />
+          ))}
+        </Grid>
+      )}
+    </div>
+  </Container>
+</Section>

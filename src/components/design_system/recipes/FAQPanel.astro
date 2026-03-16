@@ -1,0 +1,31 @@
+---
+import FAQSection from '../sections/FAQSection.astro'
+
+const items = [
+  {
+    question: '是否需要把所有旧模板示例都保留成配方？',
+    answer:
+      'No. The point is to extract the repeatable families that cover most marketing use cases, not to fossilize every demo as production inventory.',
+    open: true,
+  },
+  {
+    question: 'Should layout utilities disappear completely?',
+    answer:
+      'Not completely. Pure structural utilities can stay, but repeated layout decisions like container width, section rhythm, and grid patterns should move behind semantic wrappers.',
+  },
+  {
+    question: 'Can this kit support very different visual briefs later?',
+    answer:
+      'Yes, provided the differences can be expressed through tokens, surfaces, type scale, spacing, and a controlled set of recipe variants instead of bespoke rewrites.',
+  },
+]
+---
+
+<FAQSection
+  eyebrow="Decision hygiene"
+  title="Muted panel FAQs are useful when you want the module to feel supportive instead of dominant."
+  summary="This is a softer treatment for internal concerns, onboarding notes, or lower-priority objections."
+  items={items}
+  layout="panel"
+  tone="muted"
+/>

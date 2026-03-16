@@ -1,0 +1,25 @@
+---
+import HeaderSection from '../sections/HeaderSection.astro'
+
+const navItems = [
+  { label: '报告', href: '#' },
+  { label: '流程', href: '#' },
+  { label: '接口', href: '#' },
+  { label: '支持', href: '#' },
+]
+
+const userMenuItems = [
+  { label: '个人资料', href: '#' },
+  { label: '账单概览', href: '#' },
+  { label: '团队设置', href: '#' },
+  { label: '退出登录', href: '#', tone: 'danger' as const },
+]
+
+interface Props {
+  brandLabel?: string
+}
+
+const { brandLabel = 'Scienith' } = Astro.props
+---
+
+<HeaderSection brandLabel={brandLabel} navItems={navItems} userMenuItems={userMenuItems} />

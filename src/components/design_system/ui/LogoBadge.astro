@@ -1,0 +1,46 @@
+---
+interface Props {
+  label: string
+  href?: string
+  svg?: string
+  caption?: string
+  tone?: 'default' | 'soft' | 'outline'
+  class?: string
+}
+
+const {
+  label,
+  href,
+  svg,
+  caption,
+  tone = 'default',
+  class: className = '',
+} = Astro.props
+
+const hasMarkSlot = Astro.slots.has('mark')
+const classes = ['logo-badge', tone !== 'default' && `logo-badge--${tone}`, className]
+---
+
+{
+  href ? (
+    <a class:list={classes} href={href} aria-label={label}>
+      {(svg || hasMarkSlot) && (
+        <span class="logo-badge__mark" aria-hidden="true">
+          {hasMarkSlot ? <slot name="mark" /> : <Fragment set:html={svg} />}
+        </span>
+      )}
+
+      {caption ? <span class="logo-badge__caption">{caption}</span> : <span class="sr-only">{label}</span>}
+    </a>
+  ) : (
+    <div class:list={classes} aria-label={label}>
+      {(svg || hasMarkSlot) && (
+        <span class="logo-badge__mark" aria-hidden="true">
+          {hasMarkSlot ? <slot name="mark" /> : <Fragment set:html={svg} />}
+        </span>
+      )}
+
+      {caption ? <span class="logo-badge__caption">{caption}</span> : <span class="sr-only">{label}</span>}
+    </div>
+  )
+}

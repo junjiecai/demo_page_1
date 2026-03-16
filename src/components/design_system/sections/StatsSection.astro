@@ -1,0 +1,71 @@
+---
+import Container from '../ui/Container.astro'
+import HeadingBlock from '../ui/HeadingBlock.astro'
+import Section from '../ui/Section.astro'
+import StatCard from '../ui/StatCard.astro'
+
+interface StatItem {
+  value: string
+  label: string
+  detail?: string
+  highlight?: boolean
+}
+
+interface Props {
+  eyebrow?: string
+  title?: string
+  summary?: string
+  items: readonly StatItem[]
+  layout?: 'grid' | 'split' | 'band'
+  tone?: 'default' | 'muted' | 'contrast'
+  class?: string
+}
+
+const {
+  eyebrow,
+  title,
+  summary,
+  items,
+  layout = 'grid',
+  tone = 'default',
+  class: className = '',
+} = Astro.props
+
+const headingProps = {
+  title: title ?? '',
+  ...(eyebrow ? { eyebrow } : {}),
+  ...(summary ? { summary } : {}),
+  align: layout === 'split' ? ('start' as const) : ('center' as const),
+}
+
+const gridClasses = ['stat-grid', layout !== 'split' && 'stat-grid--quad']
+const cardTone = layout === 'band' ? (tone === 'contrast' ? 'contrast' : 'minimal') : 'default'
+---
+
+<Section tone={tone} class={className}>
+  <Container>
+    <div class="stats-section">
+      {layout === 'split' ? (
+        <div class="stats-section__split">
+          <div>{title && <HeadingBlock {...headingProps} />}</div>
+
+          <dl class="stat-grid">
+            {items.map((item) => (
+              <StatCard {...item} tone={cardTone} />
+            ))}
+          </dl>
+        </div>
+      ) : (
+        <>
+          {title && <HeadingBlock {...headingProps} />}
+
+          <dl class:list={gridClasses}>
+            {items.map((item) => (
+              <StatCard {...item} tone={cardTone} />
+            ))}
+          </dl>
+        </>
+      )}
+    </div>
+  </Container>
+</Section>

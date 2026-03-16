@@ -1,0 +1,66 @@
+---
+interface Props {
+  href?: string
+  label?: string
+  logoSrc?: string
+  logoAlt?: string
+  class?: string
+}
+
+const {
+  href = '#',
+  label = 'Brand',
+  logoSrc,
+  logoAlt,
+  class: className = '',
+} = Astro.props
+const classes = ['brand-mark', className]
+const hasCustomBrand = Astro.slots.has('default')
+const resolvedLogoAlt = logoAlt ?? `${label} logo`
+---
+
+{
+  href ? (
+    <a href={href} class:list={classes} aria-label={label}>
+      {hasCustomBrand ? (
+        <slot />
+      ) : logoSrc ? (
+        <>
+          <img class="brand-mark__logo" src={logoSrc} alt={resolvedLogoAlt} loading="eager" />
+          <span class="brand-mark__label">{label}</span>
+        </>
+      ) : (
+        <>
+          <span class="brand-mark__glyph" aria-hidden="true">
+            <span class="brand-mark__dot"></span>
+            <span class="brand-mark__dot"></span>
+            <span class="brand-mark__dot"></span>
+            <span class="brand-mark__dot"></span>
+          </span>
+          <span class="brand-mark__label">{label}</span>
+        </>
+      )}
+    </a>
+  ) : (
+    <div class:list={classes} aria-label={label}>
+      {hasCustomBrand ? (
+        <slot />
+      ) : logoSrc ? (
+        <>
+          <img class="brand-mark__logo" src={logoSrc} alt={resolvedLogoAlt} loading="eager" />
+          <span class="brand-mark__label">{label}</span>
+        </>
+      ) : (
+        <>
+          <span class="brand-mark__glyph" aria-hidden="true">
+            <span class="brand-mark__dot"></span>
+            <span class="brand-mark__dot"></span>
+            <span class="brand-mark__dot"></span>
+            <span class="brand-mark__dot"></span>
+          </span>
+          <span class="brand-mark__label">{label}</span>
+        </>
+      )}
+    </div>
+  )
+}

@@ -1,0 +1,399 @@
+---
+import '../../styles/design_system/global.css'
+
+import CTAImageSplit from '../../components/design_system/recipes/CTAImageSplit.astro'
+import FeatureGridCards from '../../components/design_system/recipes/FeatureGridCards.astro'
+import FooterNewsletter from '../../components/design_system/recipes/FooterNewsletter.astro'
+import HeaderSimple from '../../components/design_system/recipes/HeaderSimple.astro'
+import LogoCloudTrusted from '../../components/design_system/recipes/LogoCloudTrusted.astro'
+import StatsQuad from '../../components/design_system/recipes/StatsQuad.astro'
+import BrandMark from '../../components/design_system/ui/BrandMark.astro'
+import Button from '../../components/design_system/ui/Button.astro'
+import Container from '../../components/design_system/ui/Container.astro'
+import HeadingBlock from '../../components/design_system/ui/HeadingBlock.astro'
+import Section from '../../components/design_system/ui/Section.astro'
+import Surface from '../../components/design_system/ui/Surface.astro'
+import Text from '../../components/design_system/ui/Text.astro'
+import TextInput from '../../components/design_system/ui/TextInput.astro'
+
+const brandLogo = '/assets/brand/scienith-mark.png'
+
+const principles = [
+  {
+    index: '01',
+    title: '专业先于装饰',
+    body: '首页首先要像可信赖的科研与技术合作入口，其次才是展示视觉风格。',
+  },
+  {
+    index: '02',
+    title: '证据优先放大',
+    body: '截图、图谱和交付样例要尽量少而大，保证读者一眼知道它在证明什么。',
+  },
+  {
+    index: '03',
+    title: 'CTA 保持单一',
+    body: '每个关键视口只有一个最重要动作，辅助按钮只负责降低决策阻力。',
+  },
+  {
+    index: '04',
+    title: '语气克制可信',
+    body: '文案强调能力边界、交付方式和结果表达，不做夸张承诺和模板式口号。',
+  },
+] as const
+
+const tokenCards = [
+  {
+    label: 'Action',
+    value: 'var(--color-primary)',
+    swatch:
+      'linear-gradient(135deg, var(--color-primary), color-mix(in srgb, var(--color-primary) 72%, white))',
+  },
+  {
+    label: 'Evidence',
+    value: 'var(--color-panel)',
+    swatch: 'linear-gradient(135deg, var(--color-panel), var(--color-panel-strong))',
+  },
+  {
+    label: 'Quiet Surface',
+    value: 'var(--color-surface-muted)',
+    swatch: 'linear-gradient(180deg, var(--color-surface), var(--color-surface-muted))',
+  },
+  {
+    label: 'Accent',
+    value: 'var(--color-accent)',
+    swatch:
+      'linear-gradient(135deg, var(--color-accent), color-mix(in srgb, var(--color-accent) 78%, white))',
+  },
+] as const
+
+const typeRows = [
+  {
+    eyebrow: 'Display',
+    sample: '专业、克制、可信的视觉系统，应该先把信息讲清楚。',
+    spec: '用于首屏主张，体量足够明确，但不依赖夸张动效和强装饰。',
+    style: 'font-size: var(--type-display); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight);',
+  },
+  {
+    eyebrow: 'Heading',
+    sample: '模块标题承担分组和导航，不重复制造第二个主角。',
+    spec: '适合服务说明、证据解释和结构化段落过渡。',
+    style: 'font-size: var(--type-h2); line-height: var(--leading-snug);',
+  },
+  {
+    eyebrow: 'Body',
+    sample: '正文需要足够深、足够稳，支持方法说明、交付说明和科研语境下的长文本。',
+    spec: '正文舒适度优先于极细字重和偏浅对比。',
+    style: 'font-size: var(--type-body); line-height: var(--leading-relaxed);',
+  },
+] as const
+
+const proofCards = [
+  {
+    title: '品牌入口',
+    body: 'Logo、标题和主 CTA 的比例先被拉开，让读者知道这是一个正式业务入口，而不是模板展示页。',
+  },
+  {
+    title: '图像容器',
+    body: '图像卡面保持大面积可读，不在证据图上叠加多余装饰、标签云或复杂遮罩。',
+  },
+  {
+    title: '专业表面层',
+    body: '深色 panel 只留给需要建立可信度和承载高信息密度的位置，避免整站发灰。',
+  },
+  {
+    title: '字体基线',
+    body: '统一使用 Geist Sans / Geist Mono，控制标题表现力，同时保证正文长期阅读稳定。',
+  },
+] as const
+
+const foundationCards = [
+  {
+    title: '模板层只负责设计语言',
+    body: '真正的页面装配留给 build 阶段，这里先把颜色、组件层级和 section 节奏定下来。',
+  },
+  {
+    title: '品牌资源直接接正式资产',
+    body: '预览页和核心组件直接引用 public/assets 下的 logo、字体和图像，不再保留默认品牌。',
+  },
+  {
+    title: '预览页是验证门禁',
+    body: '只要 /design-system 还能看出模板默认品牌或跑不起来，这一轮 handoff 就不算完成。',
+  },
+  {
+    title: '站点语气可持续扩展',
+    body: '后续接入 IA 页面时，只需要复用这套语气和组件，不再为每页重新定义视觉原则。',
+  },
+] as const
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scienith Design System</title>
+    <meta
+      name="description"
+      content="Scienith 官网设计系统预览页，用于验证专业、克制、可信的视觉基线与组件主题。"
+    />
+    <link rel="icon" href="/assets/brand/favicon.png" />
+  </head>
+  <body>
+    <main class="template-shell">
+      <Section spacing="hero">
+        <Container>
+          <div class="design-system-hero">
+            <div class="template-group">
+              <div class="design-system-brand-row">
+                <BrandMark href="#" label="Scienith" logoSrc={brandLogo} />
+
+                <div class="design-system-actions">
+                  <Button href="#recipes">查看组件配方</Button>
+                  <Button href="#foundations" variant="secondary">检查设计基线</Button>
+                </div>
+              </div>
+
+              <HeadingBlock
+                eyebrow="Scienith 视觉基线"
+                title="这套设计系统先证明专业性，再承接首页、服务页和联系页的装配。"
+                summary="当前品牌输入只有一份正式 logo，因此这轮重点是把色彩、排版、证据容器和 CTA 节奏收束成可复用的站点模板层。"
+                display={true}
+              />
+
+              <Text as="p" tone="muted">
+                预览页的职责不是展示概念稿，而是让后续页面在真正开始 build 之前，就能先验证品牌入口、模块层级、证据承载方式和整体语气是否成立。
+              </Text>
+            </div>
+
+            <Surface tone="panel" class="design-system-foundation-card">
+              <Text as="p" tone="kicker">当前评审重点</Text>
+              <h2 class="design-system-foundation-card__title">
+                只有一个 logo，也要先把官网的可信度做稳。
+              </h2>
+              <p class="design-system-foundation-card__body">
+                这版通过暖色动作、深色证据面板、Geist 字体和克制的内容密度，先把“专业、克制、可信”的品牌方向落成可预览的模板层。
+              </p>
+              <div class="design-system-proof-list">
+                {proofCards.map((card) => (
+                  <Surface class="design-system-proof-card">
+                    <h3 class="design-system-proof-card__title">{card.title}</h3>
+                    <p class="design-system-proof-card__body">{card.body}</p>
+                  </Surface>
+                ))}
+              </div>
+            </Surface>
+          </div>
+        </Container>
+      </Section>
+
+      <Section spacing="compact">
+        <Container>
+          <div id="principles" class="template-group">
+            <HeadingBlock
+              eyebrow="设计原则"
+              title="站点应先建立业务信任，再展示样式技巧。"
+              summary="这些原则会稳定存在于模板层里，后续具体页面只需要在这个范围内装配内容。"
+            />
+
+            <div class="design-system-principles">
+              {principles.map((principle) => (
+                <Surface class="design-system-principle">
+                  <span class="design-system-principle__index">{principle.index}</span>
+                  <h3 class="design-system-principle__title">{principle.title}</h3>
+                  <p class="design-system-principle__body">{principle.body}</p>
+                </Surface>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <Section spacing="compact" tone="muted">
+        <Container>
+          <div id="tokens" class="template-group">
+            <HeadingBlock
+              eyebrow="Tokens"
+              title="主题改变应该通过 token 完成，而不是靠组件内散落的裸值。"
+              summary="颜色职责、字重层级和表面反差会直接决定首页是否显得专业，这是这轮主题化的核心。"
+            />
+
+            <div class="design-system-token-grid">
+              {tokenCards.map((card) => (
+                <Surface class="design-system-token-card">
+                  <div class="design-system-token-card__swatch" style={`background:${card.swatch};`}></div>
+                  <div class="design-system-token-card__meta">
+                    <h3 class="design-system-token-card__label">{card.label}</h3>
+                    <p class="design-system-token-card__value">{card.value}</p>
+                  </div>
+                </Surface>
+              ))}
+            </div>
+
+            <Surface class="design-system-foundation-card">
+              <Text as="p" tone="kicker">Type scale</Text>
+              <div class="design-system-type-scale">
+                {typeRows.map((row) => (
+                  <div class="design-system-type-scale__row">
+                    <p class="design-system-type-scale__eyebrow">{row.eyebrow}</p>
+                    <p style={row.style}>{row.sample}</p>
+                    <p class="design-system-type-scale__spec">{row.spec}</p>
+                  </div>
+                ))}
+              </div>
+            </Surface>
+
+            <Surface class="design-system-token-note">
+              <Text as="p" tone="kicker">资源接线</Text>
+              <p class="design-system-foundation-card__body">
+                logo、favicon、OG 基础图和 Geist 字体都已经进入 `public/assets/brand`，预览页直接消费正式资源路径。
+              </p>
+            </Surface>
+          </div>
+        </Container>
+      </Section>
+
+      <Section spacing="compact">
+        <Container>
+          <div class="template-group">
+            <HeadingBlock
+              eyebrow="Evidence"
+              title="证据型媒体必须先可读，再谈视觉气质。"
+              summary="这里用本地交付样例验证媒体容器、说明文案和图像比例是否适合 Scienith 的站点语境。"
+            />
+
+            <div class="design-system-evidence-grid">
+              <Surface class="design-system-evidence-item">
+                <img src="/assets/evidence/deliverables/sample-heatmap.png" alt="热图交付示例" />
+                <div class="template-group">
+                  <h3 class="design-system-evidence-item__title">主图优先放大</h3>
+                  <p class="design-system-evidence-caption">
+                    大图承载具体成果，避免把关键证据缩成难以辨认的附件缩略图。
+                  </p>
+                </div>
+              </Surface>
+
+              <div class="template-group">
+                <Surface class="design-system-evidence-item">
+                  <img src="/assets/evidence/deliverables/sample-shap.png" alt="SHAP 解释示例" />
+                  <p class="design-system-evidence-caption">
+                    图像与说明文本分层呈现，给读者明确的理解顺序。
+                  </p>
+                </Surface>
+
+                <Surface class="design-system-evidence-item">
+                  <img src="/assets/evidence/deliverables/sample-roc-mini.png" alt="ROC 结果示例" />
+                  <p class="design-system-evidence-caption">
+                    次级图面保持轻量，用于补充“结果如何读”的语境，而不是重复主图。
+                  </p>
+                </Surface>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <Section spacing="compact">
+        <Container>
+          <div id="foundations" class="template-group">
+            <HeadingBlock
+              eyebrow="Foundations"
+              title="在装配真实页面之前，先把核心交互和品牌原语校准。"
+              summary="这些基础块与下游 build 阶段会复用的 primitives 保持一致，因此能直接作为门禁页。"
+            />
+
+            <div class="design-system-foundations">
+              {foundationCards.map((card) => (
+                <Surface class="design-system-foundation-card">
+                  <h3 class="design-system-foundation-card__title">{card.title}</h3>
+                  <p class="design-system-foundation-card__body">{card.body}</p>
+                </Surface>
+              ))}
+            </div>
+
+            <Surface class="design-system-foundation-card">
+              <Text as="p" tone="kicker">Primitive check</Text>
+              <div class="design-system-demo-stack">
+                <div class="design-system-demo-row">
+                  <BrandMark href="#" label="Scienith" logoSrc={brandLogo} />
+                  <Button href="#">预约沟通</Button>
+                  <Button href="#" variant="secondary">查看服务</Button>
+                  <Button href="#" variant="ghost">阅读案例</Button>
+                </div>
+
+                <div class="design-system-demo-row">
+                  <TextInput
+                    id="preview-email"
+                    type="email"
+                    name="email"
+                    placeholder="team@scienith.com"
+                    autocomplete="email"
+                  />
+                  <Button type="submit">获取资料</Button>
+                </div>
+              </div>
+            </Surface>
+          </div>
+        </Container>
+      </Section>
+
+      <div id="recipes" class="template-stack">
+        <Section spacing="compact">
+          <Container>
+            <div class="template-group">
+              <HeadingBlock
+                eyebrow="Recipes"
+                title="头部与信任区块"
+                summary="预览页需要展示可直接复用的组合方式，而不是只堆零散原子组件。"
+              />
+              <div class="template-preview-list">
+                <HeaderSimple
+                  brandLabel="Scienith"
+                  brandLogoSrc={brandLogo}
+                  navItems={[
+                    { label: '首页', href: '#' },
+                    { label: '服务', href: '#' },
+                    { label: '案例', href: '#' },
+                    { label: '关于', href: '#' },
+                    { label: '联系', href: '#' },
+                  ]}
+                />
+                <LogoCloudTrusted />
+              </div>
+            </div>
+          </Container>
+        </Section>
+
+        <Section spacing="compact" tone="muted">
+          <Container>
+            <div class="template-group">
+              <HeadingBlock
+                eyebrow="Recipes"
+                title="能力说明与数字证明"
+                summary="模板层先给出可靠结构，下游项目再围绕 IA 装配内容，而不是每次重新发明页面骨架。"
+              />
+              <div class="template-preview-list">
+                <FeatureGridCards />
+                <StatsQuad />
+              </div>
+            </div>
+          </Container>
+        </Section>
+
+        <Section spacing="compact">
+          <Container>
+            <div class="template-group">
+              <HeadingBlock
+                eyebrow="Recipes"
+                title="转化与收尾"
+                summary="CTA 和 footer 是否成立，最能暴露主题化后的站点有没有保住专业感和说服力。"
+              />
+              <div class="template-preview-list">
+                <CTAImageSplit />
+                <FooterNewsletter brandLabel="Scienith" brandLogoSrc={brandLogo} />
+              </div>
+            </div>
+          </Container>
+        </Section>
+      </div>
+    </main>
+  </body>
+</html>

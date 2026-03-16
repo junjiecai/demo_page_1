@@ -1,0 +1,34 @@
+---
+import StatsSection from '../sections/StatsSection.astro'
+
+const items = [
+  {
+    value: '12',
+    label: 'Reusable recipes',
+    detail: 'Header, proof, CTA, FAQ, and footer variants ready to lift into new projects.',
+  },
+  {
+    value: '6',
+    label: 'Theme switches',
+    detail: 'Color, type, radius, spacing, and surface systems change without touching markup.',
+  },
+  {
+    value: '<1h',
+    label: 'Brand retheme',
+    detail: 'Time to align the kit to a new brief once the component inventory is already mapped.',
+  },
+  {
+    value: '0',
+    label: 'Hardcoded brands',
+    detail: 'No teal-vs-blue mismatch once classes are converted to semantic roles.',
+  },
+]
+---
+
+<StatsSection
+  eyebrow="Implementation outcome"
+  title="Split-copy stats are better when the numbers need framing, not just attention."
+  summary="Use this when a section has to explain what the metrics actually mean for launch speed, governance, or downstream maintenance."
+  items={items}
+  layout="split"
+/>

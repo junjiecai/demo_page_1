@@ -1,0 +1,176 @@
+---
+import BrandMark from '../ui/BrandMark.astro'
+import Button from '../ui/Button.astro'
+import Container from '../ui/Container.astro'
+import FooterLinkGroup from '../ui/FooterLinkGroup.astro'
+import Section from '../ui/Section.astro'
+import TextInput from '../ui/TextInput.astro'
+
+interface FooterLink {
+  label: string
+  href: string
+  badge?: string
+  status?: 'live'
+}
+
+interface FooterGroup {
+  title: string
+  links: readonly FooterLink[]
+}
+
+interface SocialItem {
+  label: string
+  href: string
+  icon: string
+}
+
+interface NewsletterConfig {
+  title: string
+  summary?: string
+  placeholder?: string
+  buttonLabel: string
+  note?: string
+}
+
+interface FooterCta {
+  title: string
+  summary?: string
+  label: string
+  href: string
+}
+
+interface Props {
+  brandLabel?: string
+  brandHref?: string
+  brandLogoSrc?: string
+  brandSummary?: string
+  groups: readonly FooterGroup[]
+  socials?: readonly SocialItem[]
+  legalLinks?: readonly FooterLink[]
+  newsletter?: NewsletterConfig
+  cta?: FooterCta
+  layout?: 'columns' | 'newsletter' | 'cta'
+  tone?: 'default' | 'muted' | 'contrast'
+  copyright?: string
+  class?: string
+}
+
+const {
+  brandLabel = 'Brand',
+  brandHref = '#',
+  brandLogoSrc,
+  brandSummary,
+  groups,
+  socials = [],
+  legalLinks = [],
+  newsletter,
+  cta,
+  layout = 'columns',
+  tone = 'default',
+  copyright,
+  class: className = '',
+} = Astro.props
+
+const ctaVariant = tone === 'contrast' ? 'inverse' : 'secondary'
+const newsletterVariant = tone === 'contrast' ? 'inverse' : 'primary'
+const hasCompanion = (layout === 'newsletter' && newsletter) || (layout === 'cta' && cta)
+---
+
+<Section
+  as="footer"
+  spacing="compact"
+  tone={tone}
+  class={['footer-shell', className].filter(Boolean).join(' ')}
+>
+  <Container>
+    <div class="footer-shell__frame">
+      <div class:list={['footer-shell__top', !hasCompanion && 'footer-shell__top--single']}>
+        <div class="footer-shell__brand">
+          <BrandMark href={brandHref} label={brandLabel} logoSrc={brandLogoSrc} />
+          {brandSummary && <p class="footer-shell__summary">{brandSummary}</p>}
+        </div>
+
+        {layout === 'newsletter' && newsletter && (
+          <div class="footer-shell__newsletter">
+            <div class="template-group">
+              <h3 class="footer-shell__cta-title">{newsletter.title}</h3>
+              {newsletter.summary && <p class="footer-shell__summary">{newsletter.summary}</p>}
+            </div>
+
+            <form class="footer-shell__signup" action="#" method="post">
+              <label class="sr-only" for="footer-email">
+                Email
+              </label>
+
+              <div class="footer-shell__signup-row">
+                <TextInput
+                  id="footer-email"
+                  type="email"
+                  name="email"
+                  placeholder={newsletter.placeholder ?? 'name@company.com'}
+                  autocomplete="email"
+                  required={true}
+                />
+
+                <Button type="submit" variant={newsletterVariant}>
+                  {newsletter.buttonLabel}
+                </Button>
+              </div>
+            </form>
+
+            {newsletter.note && <p class="footer-shell__signup-note">{newsletter.note}</p>}
+          </div>
+        )}
+
+        {layout === 'cta' && cta && (
+          <div class="footer-shell__cta">
+            <div class="template-group">
+              <h3 class="footer-shell__cta-title">{cta.title}</h3>
+              {cta.summary && <p class="footer-shell__cta-summary">{cta.summary}</p>}
+            </div>
+
+            <div>
+              <Button href={cta.href} variant={ctaVariant} size="lg">
+                {cta.label}
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div class="footer-shell__columns">
+        {groups.map((group) => (
+          <FooterLinkGroup {...group} />
+        ))}
+      </div>
+
+      <div class="footer-shell__bottom">
+        <div class="footer-shell__legal">
+          {copyright && <span>{copyright}</span>}
+
+          {legalLinks.map((link) => (
+            <a class="footer-link" href={link.href}>
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        {socials.length > 0 && (
+          <div class="footer-shell__social" aria-label="Social links">
+            {socials.map((item) => (
+              <a
+                class="footer-shell__social-link"
+                href={item.href}
+                aria-label={item.label}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <Fragment set:html={item.icon} />
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </Container>
+</Section>

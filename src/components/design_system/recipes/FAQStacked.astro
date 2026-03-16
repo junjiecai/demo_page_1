@@ -1,0 +1,30 @@
+---
+import FAQSection from '../sections/FAQSection.astro'
+
+const items = [
+  {
+    question: 'Why not keep copying static HTML examples into each project?',
+    answer:
+      'Because that keeps brand decisions, spacing rules, and repeated section structures scattered across one-off pages. A template kit centralizes those decisions and makes later changes cheap.',
+    open: true,
+  },
+  {
+    question: 'Can future projects really change only the styles layer?',
+    answer:
+      'That is the target. The prerequisite is that components already use semantic classes and layout tokens instead of color-name utilities and repeated max-width combinations.',
+  },
+  {
+    question: 'What still changes per project besides tokens?',
+    answer:
+      'Mostly recipe selection, content, and occasionally a new section variant when a brief introduces a truly new information pattern.',
+  },
+]
+---
+
+<FAQSection
+  eyebrow="FAQs"
+  title="The stacked FAQ is the simplest default: narrow, readable, and easy to drop near the close."
+  summary="It suits pages where the questions are clarifications rather than the main proof mechanism."
+  items={items}
+  layout="stack"
+/>

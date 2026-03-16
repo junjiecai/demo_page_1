@@ -1,0 +1,35 @@
+---
+import StatsSection from '../sections/StatsSection.astro'
+
+const items = [
+  {
+    value: '4 周内',
+    label: '完成首版官网交付',
+    detail: '用于验证强数字模块在浅背景上是否仍有足够节奏和说服力。',
+    highlight: true,
+  },
+  {
+    value: '1 套',
+    label: '设计系统基线',
+    detail: '支持首页、服务页和联系页在同一语言下扩展，而不是每页各做一套。',
+  },
+  {
+    value: '2 层',
+    label: '信息层级清楚',
+    detail: '始终把主张和证据分开，让用户更快知道为什么值得联系。',
+  },
+  {
+    value: '0 模板腔',
+    label: '去掉默认品牌残留',
+    detail: '这组数据本身也是 preview gate，要求组件和文案都完成 Scienith 化。',
+  },
+]
+---
+
+<StatsSection
+  eyebrow="数字信号"
+  title="数字模块要像证据，不要像装饰性的跑马灯。"
+  summary="这里验证对比区块、强调色和数值排版在专业站点语境下是否足够稳。"
+  items={items}
+  layout="grid"
+/>

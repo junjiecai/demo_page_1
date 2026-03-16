@@ -1,0 +1,27 @@
+---
+interface Props {
+  eyebrow?: string
+  title: string
+  summary?: string
+  align?: 'start' | 'center'
+  display?: boolean
+  class?: string
+}
+
+const {
+  eyebrow,
+  title,
+  summary,
+  align = 'start',
+  display = false,
+  class: className = '',
+} = Astro.props
+
+const classes = ['heading-block', align === 'center' && 'heading-block--center', className]
+---
+
+<div class:list={classes}>
+  {eyebrow && <p class="heading-block__eyebrow">{eyebrow}</p>}
+  <h2 class:list={['heading-block__title', display && 'heading-block__title--display']}>{title}</h2>
+  {summary && <p class="heading-block__summary">{summary}</p>}
+</div>

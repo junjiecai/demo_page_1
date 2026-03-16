@@ -1,0 +1,15 @@
+@import url('/assets/brand/fonts.css');
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+@import './tokens.css';
+@import './components.css';
+@import './presets/default.css';
+
+@view-transition {
+  navigation: auto;
+}
+
+@theme inline {
+  --font-sans: var(--font-google-sans-flex, var(--font-display));
+}

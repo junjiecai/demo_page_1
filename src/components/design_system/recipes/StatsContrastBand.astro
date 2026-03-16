@@ -1,0 +1,30 @@
+---
+import StatsSection from '../sections/StatsSection.astro'
+
+const items = [
+  {
+    value: '140+',
+    label: 'Marketing modules migrated',
+    detail: 'A growing inventory that now maps to reusable section families instead of static demos.',
+  },
+  {
+    value: '4',
+    label: 'Primary component families',
+    detail: 'Headers, proof blocks, conversion sections, and footers now share the same token contract.',
+  },
+  {
+    value: '1',
+    label: 'Template source of truth',
+    detail: 'Future projects start from this kit and only retheme the styles layer.',
+  },
+]
+---
+
+<StatsSection
+  eyebrow="Proof band"
+  title="Contrast bands are useful when the stats need to punctuate the scroll."
+  summary="This works well between narrative-heavy sections, especially when you want a sharper tonal break without changing the whole page."
+  items={items}
+  layout="band"
+  tone="contrast"
+/>

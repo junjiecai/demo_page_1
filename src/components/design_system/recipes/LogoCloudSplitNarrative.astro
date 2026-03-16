@@ -1,0 +1,12 @@
+---
+import LogoCloudSection from '../sections/LogoCloudSection.astro'
+import { partnerLogos } from './recipeContent'
+---
+
+<LogoCloudSection
+  eyebrow="Ecosystem"
+  title="The partner row becomes more useful when it sits beside a narrative, not under one."
+  summary="This split layout works when the page needs to explain why these logos matter before asking the visitor to infer credibility."
+  items={partnerLogos.slice(0, 6)}
+  layout="split"
+/>

@@ -1,0 +1,20 @@
+:root {
+  --font-sans: 'Geist Sans', 'Segoe UI', sans-serif;
+  --font-display: var(--font-sans);
+  --color-canvas-top: #fffdfb;
+  --color-canvas: #fffaf7;
+  --color-canvas-bottom: #f7f2ee;
+  --color-surface: #fffdfa;
+  --color-surface-muted: #f6efe9;
+  --color-surface-strong: #ece1d8;
+  --color-panel: #1b232f;
+  --color-panel-strong: #111720;
+  --color-primary: #d84d43;
+  --color-primary-strong: #bf3f34;
+  --color-accent: #f5b823;
+  --color-ink: #1f2835;
+  --color-ink-soft: #56606f;
+  --color-ink-muted: #7d8795;
+  --color-line: rgba(31, 40, 53, 0.1);
+  --color-line-strong: rgba(216, 77, 67, 0.22);
+}

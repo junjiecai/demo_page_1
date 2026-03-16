@@ -1,0 +1,16 @@
+---
+type TagName = 'div' | 'article' | 'aside'
+
+interface Props {
+  as?: TagName
+  tone?: 'card' | 'soft' | 'panel'
+  class?: string
+}
+
+const { as = 'div', tone = 'card', class: className = '' }: Props = Astro.props
+const Tag = as
+---
+
+<Tag class:list={['surface', `surface--${tone}`, className]}>
+  <slot />
+</Tag>

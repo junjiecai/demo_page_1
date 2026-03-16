@@ -1,0 +1,28 @@
+---
+interface Props {
+  columns?: number
+  tabletColumns?: number
+  mobileColumns?: number
+  gap?: string
+  class?: string
+}
+
+const {
+  columns = 3,
+  tabletColumns = columns,
+  mobileColumns = 1,
+  gap = 'var(--grid-gap-default)',
+  class: className = '',
+} = Astro.props
+
+const style = [
+  `--grid-cols:${columns}`,
+  `--grid-cols-tablet:${tabletColumns}`,
+  `--grid-cols-mobile:${mobileColumns}`,
+  `--grid-gap:${gap}`,
+].join(';')
+---
+
+<div class:list={['grid-shell', className]} style={style}>
+  <slot />
+</div>

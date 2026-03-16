@@ -1,0 +1,42 @@
+---
+interface FooterLink {
+  label: string
+  href: string
+  badge?: string
+  status?: 'live'
+}
+
+interface Props {
+  title: string
+  links: readonly FooterLink[]
+  align?: 'start' | 'center'
+  class?: string
+}
+
+const { title, links, align = 'start', class: className = '' } = Astro.props
+
+const classes = ['footer-link-group', align === 'center' && 'footer-link-group--center', className]
+---
+
+<div class:list={classes}>
+  <p class="footer-link-group__title">{title}</p>
+
+  <ul class="footer-link-group__list">
+    {links.map((link) => (
+      <li>
+        <a class="footer-link" href={link.href}>
+          <span>{link.label}</span>
+
+          {link.badge && <span class="footer-link__badge">{link.badge}</span>}
+
+          {link.status === 'live' && (
+            <span class="footer-link__status" aria-hidden="true">
+              <span class="footer-link__status-dot"></span>
+              <span class="footer-link__status-dot footer-link__status-dot--pulse"></span>
+            </span>
+          )}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>

@@ -1,0 +1,20 @@
+---
+import FooterSection from '../sections/FooterSection.astro'
+import { footerGroups, legalLinks, socialLinks } from './recipeContent'
+---
+
+<FooterSection
+  brandLabel="Scienith"
+  brandSummary="面向需要专业表达、证据展示和稳定交付节奏的科研与技术团队。"
+  groups={footerGroups}
+  legalLinks={legalLinks}
+  socials={socialLinks}
+  copyright="© 2026 Scienith. All rights reserved."
+  layout="cta"
+  cta={{
+    title: '当访客已经理解你的专业性，收尾 CTA 只需要把下一步说清楚。',
+    summary: '这个配方用于验证 footer banner 在 Scienith 语境下是否足够直接、克制且可信。',
+    label: '预约沟通',
+    href: '#',
+  }}
+/>

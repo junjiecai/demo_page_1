@@ -1,0 +1,35 @@
+---
+interface Props {
+  question: string
+  answer?: string
+  open?: boolean
+  tone?: 'card' | 'flush'
+  class?: string
+}
+
+const {
+  question,
+  answer,
+  open = false,
+  tone = 'card',
+  class: className = '',
+} = Astro.props
+
+const hasDefaultSlot = Astro.slots.has('default')
+const classes = ['accordion-item', tone !== 'card' && `accordion-item--${tone}`, className]
+---
+
+<details class:list={classes} open={open}>
+  <summary class="accordion-item__summary">
+    <span class="accordion-item__question">{question}</span>
+    <span class="accordion-item__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
+      </svg>
+    </span>
+  </summary>
+
+  <div class="accordion-item__answer">
+    {hasDefaultSlot ? <slot /> : answer && <p>{answer}</p>}
+  </div>
+</details>

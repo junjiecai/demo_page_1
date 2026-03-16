@@ -1,0 +1,34 @@
+---
+interface Props {
+  id?: string
+  type?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url'
+  name?: string
+  placeholder?: string
+  value?: string
+  autocomplete?: string
+  required?: boolean
+  class?: string
+}
+
+const {
+  id,
+  type = 'text',
+  name,
+  placeholder,
+  value,
+  autocomplete,
+  required = false,
+  class: className = '',
+} = Astro.props
+---
+
+<input
+  id={id}
+  class:list={['input-field', className]}
+  type={type}
+  name={name}
+  placeholder={placeholder}
+  value={value}
+  autocomplete={autocomplete}
+  required={required}
+/>

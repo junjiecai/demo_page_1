@@ -1,0 +1,80 @@
+---
+import AccordionItem from '../ui/AccordionItem.astro'
+import Container from '../ui/Container.astro'
+import HeadingBlock from '../ui/HeadingBlock.astro'
+import Section from '../ui/Section.astro'
+
+interface FAQItem {
+  question: string
+  answer: string
+  open?: boolean
+}
+
+interface Props {
+  eyebrow?: string
+  title?: string
+  summary?: string
+  items: readonly FAQItem[]
+  layout?: 'stack' | 'split' | 'panel'
+  tone?: 'default' | 'muted' | 'contrast'
+  class?: string
+}
+
+const {
+  eyebrow,
+  title,
+  summary,
+  items,
+  layout = 'stack',
+  tone = 'default',
+  class: className = '',
+} = Astro.props
+
+const headingProps = {
+  title: title ?? '',
+  ...(eyebrow ? { eyebrow } : {}),
+  ...(summary ? { summary } : {}),
+  align: layout === 'split' ? ('start' as const) : ('center' as const),
+}
+
+const itemTone = layout === 'split' ? 'flush' : 'card'
+const containerSize = layout === 'stack' ? 'copy' : 'page'
+---
+
+<Section tone={tone} class={className}>
+  <Container size={containerSize}>
+    <div class="faq-section">
+      {layout === 'split' ? (
+        <div class="faq-section__split">
+          <div>{title && <HeadingBlock {...headingProps} />}</div>
+
+          <div class="faq-list">
+            {items.map((item) => (
+              <AccordionItem
+                question={item.question}
+                answer={item.answer}
+                tone={itemTone}
+                {...(item.open !== undefined ? { open: item.open } : {})}
+              />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <>
+          {title && <HeadingBlock {...headingProps} />}
+
+          <div class="faq-list">
+            {items.map((item) => (
+              <AccordionItem
+                question={item.question}
+                answer={item.answer}
+                tone={itemTone}
+                {...(item.open !== undefined ? { open: item.open } : {})}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </Container>
+</Section>

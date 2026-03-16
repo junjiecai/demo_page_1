@@ -1,0 +1,71 @@
+---
+import Container from '../ui/Container.astro'
+import HeadingBlock from '../ui/HeadingBlock.astro'
+import LogoBadge from '../ui/LogoBadge.astro'
+import Section from '../ui/Section.astro'
+
+interface LogoItem {
+  label: string
+  svg?: string
+  caption?: string
+  href?: string
+}
+
+interface Props {
+  eyebrow?: string
+  title?: string
+  summary?: string
+  items: readonly LogoItem[]
+  layout?: 'simple' | 'split' | 'framed'
+  tone?: 'default' | 'muted' | 'contrast'
+  class?: string
+}
+
+const {
+  eyebrow,
+  title,
+  summary,
+  items,
+  layout = 'simple',
+  tone = 'default',
+  class: className = '',
+} = Astro.props
+
+const headingProps = {
+  title: title ?? '',
+  ...(eyebrow ? { eyebrow } : {}),
+  ...(summary ? { summary } : {}),
+  align: layout === 'split' ? ('start' as const) : ('center' as const),
+}
+
+const gridClass = layout === 'framed' ? 'logo-cloud-grid--framed' : 'logo-cloud-grid--simple'
+const badgeTone = layout === 'framed' ? 'soft' : layout === 'split' ? 'outline' : 'default'
+---
+
+<Section tone={tone} class={className}>
+  <Container>
+    <div class="logo-cloud-section">
+      {layout === 'split' ? (
+        <div class="logo-cloud-section__split">
+          <div>{title && <HeadingBlock {...headingProps} />}</div>
+
+          <div class:list={['logo-cloud-grid', gridClass]}>
+            {items.map((item) => (
+              <LogoBadge {...item} tone={badgeTone} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <>
+          {title && <HeadingBlock {...headingProps} />}
+
+          <div class:list={['logo-cloud-grid', gridClass]}>
+            {items.map((item) => (
+              <LogoBadge {...item} tone={badgeTone} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </Container>
+</Section>

@@ -1,0 +1,29 @@
+---
+type TagName = 'section' | 'div' | 'article' | 'footer'
+
+interface Props {
+  as?: TagName
+  tone?: 'default' | 'muted' | 'contrast'
+  spacing?: 'default' | 'compact' | 'hero'
+  class?: string
+}
+
+const {
+  as = 'section',
+  tone = 'default',
+  spacing = 'default',
+  class: className = '',
+}: Props = Astro.props
+
+const Tag = as
+const classes = [
+  'section-shell',
+  tone !== 'default' && `section-shell--${tone}`,
+  spacing !== 'default' && `section-shell--${spacing}`,
+  className,
+]
+---
+
+<Tag class:list={classes}>
+  <slot />
+</Tag>

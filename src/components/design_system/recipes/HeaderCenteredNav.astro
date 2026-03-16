@@ -1,0 +1,27 @@
+---
+import HeaderSection from '../sections/HeaderSection.astro'
+
+const navItems = [
+  { label: 'Overview', href: '#' },
+  { label: 'Use cases', href: '#' },
+  { label: 'Security', href: '#' },
+  { label: 'Customers', href: '#' },
+  { label: 'Docs', href: '#' },
+]
+
+interface Props {
+  brandLabel?: string
+}
+
+const { brandLabel = 'Meridian' } = Astro.props
+---
+
+<HeaderSection
+  align="center"
+  brandLabel={brandLabel}
+  navItems={navItems}
+  actions={[
+    { label: 'Contact sales', href: '#', variant: 'ghost' },
+    { label: 'Start free', href: '#', variant: 'primary' },
+  ]}
+/>

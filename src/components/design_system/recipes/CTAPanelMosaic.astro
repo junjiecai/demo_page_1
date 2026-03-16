@@ -1,0 +1,22 @@
+---
+import CTASection from '../sections/CTASection.astro'
+---
+
+<CTASection
+  eyebrow="Call to action"
+  title="A contrast panel plus image mosaic for late-page conversion."
+  summary="Use this when the section needs to feel more substantial and the supporting images help validate the offer."
+  primaryAction={{ label: 'Get started today', href: '#' }}
+  secondaryAction={{ label: 'Browse examples', href: '#' }}
+  layout="panel-mosaic"
+  mosaicImages={[
+    {
+      src: 'https://images.unsplash.com/photo-1621274790572-7c32596bc67f?auto=format&fit=crop&q=80&w=1160',
+      alt: 'Workspace detail',
+    },
+    {
+      src: 'https://images.unsplash.com/photo-1567168544813-cc03465b4fa8?auto=format&fit=crop&q=80&w=1160',
+      alt: 'Product planning wall',
+    },
+  ]}
+/>

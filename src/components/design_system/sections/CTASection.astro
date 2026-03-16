@@ -1,0 +1,132 @@
+---
+import Button from '../ui/Button.astro'
+import Container from '../ui/Container.astro'
+import MediaFrame from '../ui/MediaFrame.astro'
+import Section from '../ui/Section.astro'
+import TextInput from '../ui/TextInput.astro'
+
+interface ActionLink {
+  label: string
+  href: string
+}
+
+interface MosaicImage {
+  src: string
+  alt: string
+}
+
+interface Props {
+  title: string
+  summary?: string
+  eyebrow?: string
+  primaryAction?: ActionLink
+  secondaryAction?: ActionLink
+  layout?: 'split-media' | 'signup' | 'rounded-media' | 'panel-mosaic'
+  mediaSrc?: string
+  mediaAlt?: string
+  mosaicImages?: MosaicImage[]
+  inputPlaceholder?: string
+  submitLabel?: string
+  panelTone?: 'muted' | 'contrast'
+  class?: string
+}
+
+const {
+  title,
+  summary,
+  eyebrow,
+  primaryAction,
+  secondaryAction,
+  layout = 'split-media',
+  mediaSrc,
+  mediaAlt = '',
+  mosaicImages = [],
+  inputPlaceholder = 'Email address',
+  submitLabel = 'Sign up',
+  panelTone = layout === 'panel-mosaic' ? 'contrast' : 'muted',
+  class: className = '',
+} = Astro.props
+---
+
+<Section tone={panelTone} class={className}>
+  <Container size={layout === 'panel-mosaic' ? 'wide' : 'page'}>
+    <div class="cta-shell">
+      {(layout === 'split-media' || layout === 'rounded-media') && (
+        <div class:list={['cta-shell__grid', layout === 'split-media' && 'cta-shell__grid--split', layout === 'rounded-media' && 'cta-shell__grid--rounded']}>
+          <div class="cta-shell__panel">
+            <div class="cta-shell__copy">
+              {eyebrow && <p class="heading-block__eyebrow">{eyebrow}</p>}
+              <h2 class="cta-shell__title">{title}</h2>
+              {summary && <p class="cta-shell__summary">{summary}</p>}
+            </div>
+
+            <div class="cta-shell__actions">
+              {primaryAction && (
+                <Button href={primaryAction.href} variant={panelTone === 'contrast' ? 'inverse' : 'primary'} size="lg">
+                  {primaryAction.label}
+                </Button>
+              )}
+              {secondaryAction && (
+                <Button href={secondaryAction.href} variant={panelTone === 'contrast' ? 'ghost' : 'secondary'} size="lg">
+                  {secondaryAction.label}
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {mediaSrc && (
+            <div class="cta-shell__media">
+              <MediaFrame src={mediaSrc} alt={mediaAlt} rounded={layout === 'rounded-media' ? 'hero' : 'flush'} />
+            </div>
+          )}
+        </div>
+      )}
+
+      {layout === 'signup' && (
+        <div class="cta-shell__panel">
+          <div class="cta-shell__copy" style="text-align:center;">
+            {eyebrow && <p class="heading-block__eyebrow">{eyebrow}</p>}
+            <h2 class="cta-shell__title">{title}</h2>
+            {summary && <p class="cta-shell__summary">{summary}</p>}
+          </div>
+
+          <form class="cta-shell__signup" action="#">
+            <TextInput type="email" placeholder={inputPlaceholder} name="email" />
+            <Button type="submit" size="lg">{submitLabel}</Button>
+          </form>
+        </div>
+      )}
+
+      {layout === 'panel-mosaic' && (
+        <div class:list={['cta-shell__grid', 'cta-shell__grid--panel']}>
+          <div class="cta-shell__panel">
+            <div class="cta-shell__copy">
+              {eyebrow && <p class="heading-block__eyebrow">{eyebrow}</p>}
+              <h2 class="cta-shell__title">{title}</h2>
+              {summary && <p class="cta-shell__summary">{summary}</p>}
+            </div>
+
+            <div class="cta-shell__actions">
+              {primaryAction && (
+                <Button href={primaryAction.href} variant="inverse" size="lg">
+                  {primaryAction.label}
+                </Button>
+              )}
+              {secondaryAction && (
+                <Button href={secondaryAction.href} variant="ghost" size="lg">
+                  {secondaryAction.label}
+                </Button>
+              )}
+            </div>
+          </div>
+
+          <div class="cta-shell__mosaic">
+            {mosaicImages.map((image) => (
+              <MediaFrame src={image.src} alt={image.alt} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  </Container>
+</Section>

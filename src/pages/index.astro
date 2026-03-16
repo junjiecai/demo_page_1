@@ -1,0 +1,26 @@
+---
+import HomePage from '../components/app_components/HomePage.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { getHomePageContent, getSiteChromeContent } from '../lib/site-content'
+
+const home = getHomePageContent()
+const chrome = getSiteChromeContent()
+---
+
+<BaseLayout
+  title="Scienith | 医学 AI 建模与结果交付"
+  description="Scienith 聚焦医学 AI 建模中的流程组织、结果稳健性与可复核交付，让团队先判断可行性，再决定是否正式推进。"
+  canonicalPath="/"
+  header={chrome.header}
+  footer={chrome.footer}
+  floatingCta={chrome.floatingCta}
+>
+  <HomePage
+    hero={home.hero}
+    delivery={home.delivery}
+    evidence={home.evidence}
+    evidenceAssets={home.evidenceAssets}
+    primaryActionLabel={chrome.floatingCta.label}
+    primaryActionHref={chrome.floatingCta.href}
+  />
+</BaseLayout>

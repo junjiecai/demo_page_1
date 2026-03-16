@@ -1,0 +1,32 @@
+---
+import FooterSection from '../sections/FooterSection.astro'
+import { footerGroups, legalLinks, socialLinks } from './recipeContent'
+
+interface Props {
+  brandLabel?: string
+  brandLogoSrc?: string
+}
+
+const {
+  brandLabel = 'Scienith',
+  brandLogoSrc = '/assets/brand/scienith-mark.png',
+} = Astro.props
+---
+
+<FooterSection
+  brandLabel={brandLabel}
+  brandLogoSrc={brandLogoSrc}
+  brandSummary="面向需要专业表达、证据展示和稳定交付节奏的科研与技术团队。"
+  groups={footerGroups}
+  legalLinks={legalLinks}
+  socials={socialLinks}
+  copyright="© 2026 Scienith. All rights reserved."
+  layout="newsletter"
+  newsletter={{
+    title: '获取下一次沟通前需要的能力样例与交付说明。',
+    summary: '这个位置用于验证 footer 在专业站点里能否承载邮箱收集、资料订阅或咨询转化，而不是堆额外装饰。',
+    placeholder: 'team@scienith.com',
+    buttonLabel: '提交邮箱',
+    note: '低频发送，仅在有新案例或能力说明时触达。',
+  }}
+/>

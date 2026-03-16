@@ -1,0 +1,17 @@
+---
+type TagName = 'div' | 'section' | 'article' | 'main'
+
+interface Props {
+  as?: TagName
+  size?: 'page' | 'wide' | 'copy'
+  class?: string
+}
+
+const { as = 'div', size = 'page', class: className = '' }: Props = Astro.props
+const Tag = as
+const classes = ['container-shell', size !== 'page' && `container-shell--${size}`, className]
+---
+
+<Tag class:list={classes}>
+  <slot />
+</Tag>

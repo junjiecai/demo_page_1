@@ -1,0 +1,30 @@
+---
+import FAQSection from '../sections/FAQSection.astro'
+
+const items = [
+  {
+    question: 'Where should page-level recipes live versus app-level pages?',
+    answer:
+      'Recipes stay in the kit as reusable compositions. Final app pages import them, combine them, and remain responsible for route-specific content and SEO.',
+    open: true,
+  },
+  {
+    question: 'Why keep a section layer between primitives and recipes?',
+    answer:
+      'Because sections capture the recurring information jobs of marketing pages. They stop recipes from becoming giant, one-off components that are too specific to reuse.',
+  },
+  {
+    question: 'What happens when a brief needs a new pattern?',
+    answer:
+      'Add or extend the section or recipe in the template source first, then let downstream projects consume that updated contract.',
+  },
+]
+---
+
+<FAQSection
+  eyebrow="Architecture"
+  title="Use the split FAQ when the left column needs to carry the rationale and the right column handles the objections."
+  summary="This layout reads more like a design system note turned into a marketing module."
+  items={items}
+  layout="split"
+/>

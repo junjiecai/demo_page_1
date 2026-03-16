@@ -1,0 +1,168 @@
+---
+import Button from '../design_system/ui/Button.astro'
+import Container from '../design_system/ui/Container.astro'
+import HeadingBlock from '../design_system/ui/HeadingBlock.astro'
+import MediaFrame from '../design_system/ui/MediaFrame.astro'
+import Section from '../design_system/ui/Section.astro'
+import Surface from '../design_system/ui/Surface.astro'
+import Text from '../design_system/ui/Text.astro'
+
+interface MessageAsset {
+  url: string
+  alt: string
+  caption?: string
+  usage?: string[]
+}
+
+interface MessageCopy {
+  eyebrow?: string
+  headline: string
+  summary?: string
+  bullets: string[]
+}
+
+interface Props {
+  hero: MessageCopy
+  delivery: MessageCopy
+  evidence: MessageCopy
+  evidenceAssets: MessageAsset[]
+  primaryActionLabel: string
+  primaryActionHref: string
+}
+
+const {
+  hero,
+  delivery,
+  evidence,
+  evidenceAssets,
+  primaryActionLabel,
+  primaryActionHref,
+} = Astro.props
+
+const hasUsage = (asset: MessageAsset, usage: string) => asset.usage?.includes(usage) ?? false
+
+const leadAsset =
+  evidenceAssets.find((asset) => hasUsage(asset, 'hero') || hasUsage(asset, 'section'))
+  ?? evidenceAssets[0]
+const supportingAssets = evidenceAssets.filter((asset) => asset !== leadAsset)
+---
+
+<Section spacing="hero">
+  <Container>
+    <div class="app-home-hero">
+      <div class="app-home-hero__copy">
+        <HeadingBlock
+          eyebrow={hero.eyebrow}
+          title={hero.headline}
+          summary={hero.summary}
+          display={true}
+        />
+
+        <Text as="p" tone="muted">
+          Scienith 更关注研究问题是否值得推进、结果是否足够稳健，以及交付材料是否便于复核和后续补充。
+        </Text>
+
+        <div class="app-home-hero__actions">
+          <Button href={primaryActionHref}>{primaryActionLabel}</Button>
+          <Button href="#evidence" variant="secondary">查看小样本证据</Button>
+        </div>
+      </div>
+
+      <Surface tone="panel" class="app-home-hero__panel">
+        <Text as="p" tone="kicker">{evidence.eyebrow}</Text>
+        <h2 class="app-home-hero__panel-title">{evidence.headline}</h2>
+        <p class="app-home-hero__panel-body">{evidence.summary}</p>
+
+        {leadAsset && (
+          <div class="app-home-hero__figure">
+            <MediaFrame src={leadAsset.url} alt={leadAsset.alt} rounded="hero" />
+            {leadAsset.caption && <p class="app-home-figure__caption">{leadAsset.caption}</p>}
+          </div>
+        )}
+      </Surface>
+    </div>
+  </Container>
+</Section>
+
+<Section spacing="compact" tone="muted">
+  <Container>
+    <div id="delivery" class="app-home-block">
+      <HeadingBlock
+        eyebrow={delivery.eyebrow}
+        title={delivery.headline}
+        summary={delivery.summary}
+      />
+
+      <div class="app-home-proof-grid">
+        <Surface class="app-home-message-card">
+          <Text as="p" tone="kicker">服务底线</Text>
+          <h3 class="app-home-message-card__title">{hero.headline}</h3>
+          <p class="app-home-message-card__body">{hero.summary}</p>
+        </Surface>
+
+        <Surface class="app-home-message-card">
+          <Text as="p" tone="kicker">{delivery.eyebrow}</Text>
+          <h3 class="app-home-message-card__title">{delivery.headline}</h3>
+          <ul class="app-home-proof-list">
+            {delivery.bullets.map((bullet) => (
+              <li class="app-home-proof-item">{bullet}</li>
+            ))}
+          </ul>
+        </Surface>
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<Section spacing="compact">
+  <Container>
+    <div id="evidence" class="app-home-block">
+      <HeadingBlock
+        eyebrow={evidence.eyebrow}
+        title={evidence.headline}
+        summary={evidence.summary}
+      />
+
+      <div class="app-home-gallery">
+        {leadAsset && (
+          <Surface class="app-home-evidence-card app-home-gallery__lead">
+            <MediaFrame src={leadAsset.url} alt={leadAsset.alt} rounded="hero" />
+            <p class="app-home-figure__caption">{leadAsset.caption ?? leadAsset.alt}</p>
+          </Surface>
+        )}
+
+        <div class="app-home-gallery__stack">
+          {supportingAssets.map((asset) => (
+            <Surface class="app-home-evidence-card">
+              <MediaFrame src={asset.url} alt={asset.alt} />
+              <p class="app-home-figure__caption">{asset.caption ?? asset.alt}</p>
+            </Surface>
+          ))}
+        </div>
+      </div>
+
+      <div class="app-home-contact-copy">
+        <Surface class="app-home-message-card">
+          <Text as="p" tone="kicker">稳健表达</Text>
+          <h3 class="app-home-evidence-card__title">把不确定性说清楚，比单次高分更重要</h3>
+          <ul class="app-home-evidence-list">
+            {evidence.bullets.map((bullet) => (
+              <li>{bullet}</li>
+            ))}
+          </ul>
+        </Surface>
+
+        <Surface class="app-home-message-card">
+          <Text as="p" tone="kicker">下一步</Text>
+          <h3 class="app-home-evidence-card__title">先做可行性评估，再决定是否进入正式建模</h3>
+          <p class="app-home-evidence-card__body">
+            如果你已经有研究问题、结局定义或初步数据，可以先从免费可行性评估开始，尽早识别是否值得正式推进。
+          </p>
+          <div class="app-home-hero__actions">
+            <Button href={primaryActionHref}>{primaryActionLabel}</Button>
+          </div>
+        </Surface>
+      </div>
+    </div>
+  </Container>
+</Section>

@@ -1,0 +1,16 @@
+---
+type TagName = 'p' | 'span' | 'div'
+
+interface Props {
+  as?: TagName
+  tone?: 'default' | 'muted' | 'inverse' | 'kicker'
+  class?: string
+}
+
+const { as = 'p', tone = 'default', class: className = '' }: Props = Astro.props
+const Tag = as
+---
+
+<Tag class:list={['text-role', `text-role--${tone}`, className]}>
+  <slot />
+</Tag>
