@@ -76,10 +76,10 @@
   --type-body: 1rem;
   --type-small: 0.875rem;
 
-  --leading-tight: 1.1;
-  --leading-snug: 1.25;
-  --leading-normal: 1.5;
-  --leading-relaxed: 1.7;
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.8;
 
   --tracking-tight: -0.03em;
   --tracking-normal: 0;
