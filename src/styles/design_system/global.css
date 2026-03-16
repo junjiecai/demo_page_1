@@ -1,4 +1,4 @@
-@import url('/assets/brand/fonts.css');
+@import './fonts.css';
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
