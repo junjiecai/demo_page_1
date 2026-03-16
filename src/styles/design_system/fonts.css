@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'Geist Sans';
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('/assets/brand/GeistVF.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('/assets/brand/GeistMonoVF.woff2') format('woff2');
+}
