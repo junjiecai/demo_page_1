@@ -327,7 +327,7 @@ select {
 
 .heading-block__eyebrow {
   margin: 0;
-  color: var(--color-primary);
+  color: var(--color-success);
   font-family: var(--font-mono);
   font-size: var(--type-eyebrow);
   font-weight: 700;
